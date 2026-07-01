@@ -8,10 +8,10 @@ export default function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-lg border border-gray-200 bg-white p-5">
+    <section className="glass-panel p-5 transition-shadow duration-300 hover:shadow-[0_18px_44px_-18px_rgba(30,41,59,0.28)] sm:p-6">
       <div className="mb-4">
-        <h2 className="text-base font-semibold text-gray-900">{title}</h2>
-        {subtitle && <p className="text-xs text-gray-500 mt-0.5">{subtitle}</p>}
+        <h2 className="text-[15px] font-semibold tracking-tight text-slate-900">{title}</h2>
+        {subtitle && <p className="mt-0.5 text-xs text-slate-500">{subtitle}</p>}
       </div>
       {children}
     </section>

@@ -15,14 +15,14 @@ export default function SimpleTable<T>({
   rowKey: (row: T) => string;
 }) {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto rounded-xl border border-white/60">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-gray-200 text-left text-xs uppercase text-gray-500">
+          <tr className="border-b border-slate-200/70 bg-white/40 text-left text-xs uppercase tracking-wide text-slate-500 backdrop-blur-sm">
             {columns.map((col) => (
               <th
                 key={col.key}
-                className={`py-2 pr-3 ${col.align === "right" ? "text-right" : ""}`}
+                className={`py-2.5 px-3 first:pl-3 ${col.align === "right" ? "text-right" : ""}`}
               >
                 {col.label}
               </th>
@@ -31,11 +31,14 @@ export default function SimpleTable<T>({
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={rowKey(row)} className="border-b border-gray-100 hover:bg-gray-50">
+            <tr
+              key={rowKey(row)}
+              className="border-b border-slate-100/70 transition-colors last:border-b-0 hover:bg-white/50"
+            >
               {columns.map((col) => (
                 <td
                   key={col.key}
-                  className={`py-2 pr-3 ${col.align === "right" ? "text-right" : ""}`}
+                  className={`py-2.5 px-3 tabular-nums first:pl-3 ${col.align === "right" ? "text-right" : ""}`}
                 >
                   {col.render(row)}
                 </td>

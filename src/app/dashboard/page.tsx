@@ -57,13 +57,13 @@ export default function DashboardPage() {
     .map((p) => ({ nome: p.medico.split(" ").slice(0, 2).join(" "), volumeReceitas: p.volumeReceitas }));
 
   return (
-    <main className="flex-1 px-4 sm:px-8 py-8 max-w-7xl mx-auto w-full">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+    <main id="main-content" className="flex-1 mx-auto w-full max-w-7xl px-4 py-8 sm:px-8">
+      <div className="glass-panel mb-6 flex flex-wrap items-center justify-between gap-4 px-5 py-4">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">
+          <h1 className="text-xl font-semibold tracking-tight text-slate-900">
             Dashboard de Prescrições
           </h1>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="mt-0.5 text-xs tabular-nums text-slate-500">
             Arquivo: {result.fileName} · Processado em {formatDate(result.parsedAt)} · Período:{" "}
             {formatDate(visaoGeral.periodoInicio)} a {formatDate(visaoGeral.periodoFim)}
           </p>
@@ -73,14 +73,14 @@ export default function DashboardPage() {
             clear();
             router.push("/");
           }}
-          className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+          className="glass-input font-medium text-slate-700 transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98]"
         >
           Enviar outro arquivo
         </button>
       </div>
 
       {result.warnings.length > 0 && (
-        <div className="mb-6 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+        <div className="glass-panel mb-6 border-amber-200/70 bg-amber-50/60 px-4 py-3 text-sm text-amber-800">
           {result.warnings.map((w, i) => (
             <p key={i}>⚠ {w}</p>
           ))}
@@ -97,29 +97,36 @@ export default function DashboardPage() {
       />
 
       {filteredRecords.length === 0 ? (
-        <div className="rounded-lg border border-gray-200 bg-white p-10 text-center text-sm text-gray-500">
+        <div className="glass-panel p-10 text-center text-sm text-slate-500">
           Nenhum registro encontrado para os filtros selecionados.
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-            <MetricCard label="Receitas" value={formatNumber(visaoGeral.totalReceitas)} subtitle={`${formatNumber(visaoGeral.totalItens)} itens`} />
-            <MetricCard label="Valor Total" value={formatCurrency(visaoGeral.valorTotal)} highlight />
-            <MetricCard label="Custo Total" value={formatCurrency(visaoGeral.custoTotal)} />
-            <MetricCard
-              label="Margem"
-              value={formatCurrency(visaoGeral.margemTotal)}
-              subtitle={formatPercent(visaoGeral.margemPercentual)}
-            />
-            <MetricCard label="Ticket Médio" value={formatCurrency(visaoGeral.ticketMedioPorReceita)} subtitle="por receita" />
-            <MetricCard label="Pacientes" value={formatNumber(visaoGeral.totalPacientes)} />
-            <MetricCard label="Prescritores" value={formatNumber(visaoGeral.totalPrescritores)} />
-            <MetricCard label="Filiais" value={formatNumber(porFilial.length)} />
-            <MetricCard label="Formas Farmacêuticas" value={formatNumber(porForma.length)} />
-            <MetricCard label="Estados (UF)" value={formatNumber(porUF.length)} />
+          <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            {[
+              <MetricCard key="receitas" label="Receitas" value={formatNumber(visaoGeral.totalReceitas)} subtitle={`${formatNumber(visaoGeral.totalItens)} itens`} />,
+              <MetricCard key="valor" label="Valor Total" value={formatCurrency(visaoGeral.valorTotal)} highlight />,
+              <MetricCard key="custo" label="Custo Total" value={formatCurrency(visaoGeral.custoTotal)} />,
+              <MetricCard
+                key="margem"
+                label="Margem"
+                value={formatCurrency(visaoGeral.margemTotal)}
+                subtitle={formatPercent(visaoGeral.margemPercentual)}
+              />,
+              <MetricCard key="ticket" label="Ticket Médio" value={formatCurrency(visaoGeral.ticketMedioPorReceita)} subtitle="por receita" />,
+              <MetricCard key="pacientes" label="Pacientes" value={formatNumber(visaoGeral.totalPacientes)} />,
+              <MetricCard key="prescritores" label="Prescritores" value={formatNumber(visaoGeral.totalPrescritores)} />,
+              <MetricCard key="filiais" label="Filiais" value={formatNumber(porFilial.length)} />,
+              <MetricCard key="formas" label="Formas Farmacêuticas" value={formatNumber(porForma.length)} />,
+              <MetricCard key="ufs" label="Estados (UF)" value={formatNumber(porUF.length)} />,
+            ].map((card, i) => (
+              <div key={card.key} className="animate-fade-up" style={{ animationDelay: `${i * 35}ms` }}>
+                {card}
+              </div>
+            ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
             <Section title="Evolução Mensal" subtitle="Valor e margem por mês">
               <EvolucaoChart data={evolucaoMensal} />
             </Section>
@@ -128,7 +135,7 @@ export default function DashboardPage() {
                 data={topPrescritoresChart}
                 xKey="nome"
                 yKey="volumeReceitas"
-                color="#2563eb"
+                color="#4f46e5"
                 valueFormatter={(v) => formatNumber(v)}
               />
             </Section>
@@ -143,7 +150,7 @@ export default function DashboardPage() {
             </Section>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
             <Section title="Por Filial (Empresa)">
               <SimpleTable
                 rows={porFilial}
@@ -169,7 +176,7 @@ export default function DashboardPage() {
             </Section>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
             <Section title="Por Forma Farmacêutica">
               <SimpleTable
                 rows={porForma}

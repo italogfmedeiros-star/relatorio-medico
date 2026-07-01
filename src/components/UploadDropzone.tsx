@@ -62,34 +62,46 @@ export default function UploadDropzone() {
         onDragLeave={() => setIsDragging(false)}
         onDrop={onDrop}
         onClick={() => inputRef.current?.click()}
-        className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-12 text-center cursor-pointer transition-colors ${
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") inputRef.current?.click();
+        }}
+        role="button"
+        tabIndex={0}
+        aria-label="Enviar relatório do ERP"
+        className={`glass-panel-strong flex flex-col items-center justify-center gap-4 border-2 border-dashed p-12 text-center cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 ${
           isDragging
-            ? "border-blue-500 bg-blue-50"
-            : "border-gray-300 hover:border-gray-400 bg-gray-50"
+            ? "border-indigo-400 bg-indigo-50/60 shadow-[0_20px_50px_-16px_rgba(79,70,229,0.4)] scale-[1.01]"
+            : "border-slate-300/70 hover:border-indigo-300 hover:shadow-[0_20px_50px_-18px_rgba(30,41,59,0.3)]"
         }`}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-10 w-10 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+        <div
+          className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br transition-transform duration-300 ${
+            isDragging ? "scale-110 from-indigo-500 to-sky-500" : "from-indigo-400 to-sky-400"
+          }`}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-          />
-        </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-7 w-7 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.75}
+              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+            />
+          </svg>
+        </div>
         {isProcessing ? (
-          <p className="text-sm font-medium text-gray-700">Processando arquivo…</p>
+          <p className="text-sm font-medium text-slate-700">Processando arquivo…</p>
         ) : (
           <>
-            <p className="text-sm font-medium text-gray-700">
+            <p className="text-sm font-medium text-slate-800">
               Arraste o relatório aqui ou clique para selecionar
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-slate-500">
               Formatos aceitos: .csv, .xls, .xlsx — exportado do ERP
             </p>
           </>
@@ -107,7 +119,9 @@ export default function UploadDropzone() {
         />
       </div>
       {error && (
-        <p className="mt-3 text-sm text-red-600 text-center">{error}</p>
+        <p className="glass-panel mt-3 px-4 py-2.5 text-center text-sm text-red-700 border-red-200/70 bg-red-50/60">
+          {error}
+        </p>
       )}
     </div>
   );

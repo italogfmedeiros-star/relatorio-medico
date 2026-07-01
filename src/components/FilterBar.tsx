@@ -26,32 +26,32 @@ export default function FilterBar({
   const active = hasActiveFilters(filters);
 
   return (
-    <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4">
+    <div className="glass-panel mb-6 p-4">
       <div className="flex flex-wrap items-end gap-3">
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-gray-500">Data início</label>
+          <label className="text-xs font-medium text-slate-500">Data início</label>
           <input
             type="date"
             value={filters.dataInicio}
             onChange={(e) => set("dataInicio", e.target.value)}
-            className="rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-400 focus:outline-none"
+            className="glass-input"
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-gray-500">Data fim</label>
+          <label className="text-xs font-medium text-slate-500">Data fim</label>
           <input
             type="date"
             value={filters.dataFim}
             onChange={(e) => set("dataFim", e.target.value)}
-            className="rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-400 focus:outline-none"
+            className="glass-input"
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-gray-500">Filial</label>
+          <label className="text-xs font-medium text-slate-500">Filial</label>
           <select
             value={filters.empresa}
             onChange={(e) => set("empresa", e.target.value)}
-            className="rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-400 focus:outline-none"
+            className="glass-input"
           >
             <option value="">Todas</option>
             {options.empresas.map((e) => (
@@ -62,11 +62,11 @@ export default function FilterBar({
           </select>
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-gray-500">Forma Farmacêutica</label>
+          <label className="text-xs font-medium text-slate-500">Forma Farmacêutica</label>
           <select
             value={filters.forma}
             onChange={(e) => set("forma", e.target.value)}
-            className="rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-400 focus:outline-none"
+            className="glass-input"
           >
             <option value="">Todas</option>
             {options.formas.map((f) => (
@@ -77,11 +77,11 @@ export default function FilterBar({
           </select>
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-gray-500">UF</label>
+          <label className="text-xs font-medium text-slate-500">UF</label>
           <select
             value={filters.uf}
             onChange={(e) => set("uf", e.target.value)}
-            className="rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-400 focus:outline-none"
+            className="glass-input"
           >
             <option value="">Todas</option>
             {options.ufs.map((u) => (
@@ -92,13 +92,13 @@ export default function FilterBar({
           </select>
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-gray-500">Prescritor</label>
+          <label className="text-xs font-medium text-slate-500">Prescritor</label>
           <input
             type="text"
             placeholder="Buscar por nome..."
             value={filters.medico}
             onChange={(e) => set("medico", e.target.value)}
-            className="w-48 rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:border-blue-400 focus:outline-none"
+            className="glass-input w-48"
           />
         </div>
 
@@ -108,14 +108,14 @@ export default function FilterBar({
               onClick={() =>
                 onChange({ dataInicio: "", dataFim: "", empresa: "", forma: "", uf: "", medico: "" })
               }
-              className="text-sm text-gray-500 hover:text-gray-700 underline"
+              className="text-sm text-slate-500 underline decoration-slate-300 underline-offset-2 transition-colors hover:text-slate-700"
             >
               Limpar filtros
             </button>
           )}
           <button
             onClick={onExport}
-            className="flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            className="flex items-center gap-2 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-[0_10px_24px_-10px_rgba(79,70,229,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_-10px_rgba(79,70,229,0.6)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +135,7 @@ export default function FilterBar({
           </button>
         </div>
       </div>
-      <p className="mt-3 text-xs text-gray-500">
+      <p className="mt-3 text-xs tabular-nums text-slate-500">
         Exibindo {filteredCount.toLocaleString("pt-BR")} de {totalCount.toLocaleString("pt-BR")} itens
         {active ? " (filtrado)" : ""}
       </p>

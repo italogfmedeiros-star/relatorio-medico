@@ -25,10 +25,17 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="pt-BR"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="relative min-h-full flex flex-col">
+        <a href="#main-content" className="skip-link glass-panel px-4 py-2 text-sm font-medium text-slate-800">
+          Pular para o conteúdo
+        </a>
+        <div aria-hidden className="bg-ambient pointer-events-none fixed inset-0 -z-20" />
+        <div aria-hidden className="bg-grain pointer-events-none fixed inset-0 -z-10 opacity-[0.035] mix-blend-overlay" />
+        {children}
+      </body>
     </html>
   );
 }
