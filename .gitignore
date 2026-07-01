@@ -42,3 +42,5 @@ next-env.d.ts
 
 # dados sensíveis de pacientes (relatórios do ERP)
 /sample-data/
+
+.vercel

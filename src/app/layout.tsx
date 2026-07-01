@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
   title: "Relatório Médico | Prescrições Manipuladas",
   description: "Dashboard de análise de prescrições de receitas manipuladas",
 };
